@@ -12,10 +12,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class MerchantStock {
 
-
-
-    public static Object getMerchantId;
-
     @NotEmpty(message = "ID must not be empty")
     @Size(min = 2, message = "ID have to be more than 2 length long") 
     private String id;

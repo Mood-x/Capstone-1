@@ -46,6 +46,8 @@ public class User {
     private double balance;
 
     private List<Product> wishlist = new ArrayList<>();
+    private List<Product> cart = new ArrayList<>();
+    private List<Product> purchases = new ArrayList<>();
 
 
 }

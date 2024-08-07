@@ -1,5 +1,7 @@
 package com.example.capstone_1.Controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.capstone_1.API.ApiResponse;
 import com.example.capstone_1.Model.Product;
 import com.example.capstone_1.Service.ProductService;
-import com.example.capstone_1.Service.ReviewService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,6 @@ import lombok.RequiredArgsConstructor;
 public class ProductController {
 
     private final ProductService productService;
-    private final ReviewService reviewService;
 
 
 // ===============================================================================================
@@ -96,6 +96,14 @@ public class ProductController {
         }
 
         return ResponseEntity.status(400).body(new ApiResponse("Product not found")); 
+    }
+// ===============================================================================================
+
+
+    @GetMapping("/filter/{rating}/{minPrice}/{maxPrice}")
+    public ResponseEntity getProductsByRatingAndPriceRange(@PathVariable double rating, @PathVariable double minPrice, @PathVariable double maxPrice){
+        List<Product> filteredProducts = productService.getProductsByRatingAndPriceRange(rating, minPrice, maxPrice); 
+        return ResponseEntity.status(200).body(filteredProducts); 
     }
 
 // ===============================================================================================

@@ -78,7 +78,22 @@ public class ProductService {
         return false; 
     }
     
-    // ===============================================
+
+    public List<Product> getProductsByRatingAndPriceRange(double minRating, double minPrice, double maxPrice){
+        List<Product> filteredProducts = new ArrayList<>(); 
+
+        for(Product product : products){
+            double averageRating = product.getAverageRating(); 
+            double price = product.getPrice(); 
+
+            if(averageRating >= minRating && price >= minPrice && price <= maxPrice){
+                filteredProducts.add(product); 
+            }
+        }
+
+        return filteredProducts; 
+    }
+
     public String addReview(String productId, Review review) {
         for (Product product : products) {
             if (product.getId().equals(productId)) {
@@ -87,14 +102,5 @@ public class ProductService {
             }
         }
         return "Product not found";
-    }
-
-    public List<Review> getReviewsByProductId(String productId) {
-        for (Product product : products) {
-            if (product.getId().equals(productId)) {
-                return new ArrayList<>(product.getReviews());
-            }
-        }
-        return new ArrayList<>();
     }
 }

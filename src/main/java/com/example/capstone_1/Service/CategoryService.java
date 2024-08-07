@@ -39,6 +39,7 @@ public class CategoryService {
     public boolean updateCategory(String id, Category category){
         for(int i = 0; i < categories.size(); i++){
             if(categories.get(i).getId().equals(id)){
+                category.setId(id);
                 categories.set(i, category);
                 return true; 
             }

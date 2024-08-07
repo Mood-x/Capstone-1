@@ -40,6 +40,7 @@ public class MerchantService {
     public boolean updateMerchant(String id, Merchant merchant){
         for(int i = 0; i < merchants.size(); i++){
             if(merchants.get(i).getId().equals(id)){
+                merchant.setId(id);
                 merchants.set(i, merchant);
                 return true; 
             }

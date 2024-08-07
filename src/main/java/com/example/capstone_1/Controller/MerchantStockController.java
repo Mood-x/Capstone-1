@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.capstone_1.API.ApiResponse;
 import com.example.capstone_1.Model.MerchantStock;
 import com.example.capstone_1.Service.MerchantStockService;
-import com.example.capstone_1.Service.ProductService;
-import com.example.capstone_1.Service.UserService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +24,8 @@ import lombok.RequiredArgsConstructor;
 public class MerchantStockController {
 
     private final MerchantStockService merchantStockService;
-    private final UserService userService; 
-    private final ProductService productService; 
+    // private final UserService userService; 
+    // private final ProductService productService; 
 
 // ===============================================================================================
 
@@ -93,19 +91,6 @@ public class MerchantStockController {
         }
 
         return ResponseEntity.status(400).body(new ApiResponse("Merchant stock not found")); 
-    }
-
-// ===============================================================================================
-
-    @PostMapping("/buy/{userId}/{productId}/{merchantId}/{discountCode}")
-    public ResponseEntity buyProduct(@PathVariable String userId, @PathVariable String productId, @PathVariable String merchantId, @PathVariable String discountCode){
-        String result = merchantStockService.buyProduct(userId, productId, merchantId, discountCode); 
-
-        if(result.equals("Purchase successful")){
-            return ResponseEntity.ok(result); 
-        }else {
-            return ResponseEntity.badRequest().body(result); 
-        }
     }
 
 // ===============================================================================================

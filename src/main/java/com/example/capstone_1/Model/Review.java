@@ -2,7 +2,6 @@ package com.example.capstone_1.Model;
 
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,7 +20,6 @@ public class Review {
     @DecimalMax(value = "5.0", message = "Rating must be between 1.0 and 5.0")
     private double rating;
 
-    @NotBlank(message = "Review text is required")
     private String comment;
 
 

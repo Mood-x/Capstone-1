@@ -121,4 +121,49 @@ public class UserController {
             return ResponseEntity.status(400).body(result); 
         }
     }
+
+
+    @GetMapping("/{userId}/cart")
+    public ResponseEntity getCart(@PathVariable String userId){
+        List<Product> cartList = userService.getCart(userId); 
+
+        if(cartList.isEmpty()){
+            return ResponseEntity.status(400).body(new ApiResponse("No products avaliable")); 
+        }
+
+        return ResponseEntity.status(200).body(cartList); 
+    }
+
+    @PostMapping("/{userId}/cart/{productId}")
+    public ResponseEntity addProductToCart(@PathVariable String userId, @PathVariable String productId){
+        String result = userService.addProductToCart(userId, productId); 
+
+        if(result.equals("Product added to cart successfully")){
+            return ResponseEntity.status(200).body(result); 
+        }else{
+            return ResponseEntity.status(400).body(result); 
+        }
+    }
+
+    @DeleteMapping("/{userId}/cart/{productId}")
+    public ResponseEntity removeFromCart(@PathVariable String userId, @PathVariable String productId){
+        String result = userService.removeFromCart(userId, productId) ;
+
+        if(result.equals("Product removed from cart successfully")){
+            return ResponseEntity.status(200).body(result); 
+        }else {
+            return  ResponseEntity.status(400).body(result); 
+        }
+    }
+
+    @PostMapping("/{userId}/{discountCode}/checkout")
+    public ResponseEntity checkout(@PathVariable String userId, @PathVariable String discountCode){
+        String result = userService.checkout(userId, discountCode); 
+
+        if(result.equals("Checkout successful")){
+            return ResponseEntity.status(200).body(result); 
+        }else{
+            return ResponseEntity.status(400).body(result); 
+        }
+    }
 }

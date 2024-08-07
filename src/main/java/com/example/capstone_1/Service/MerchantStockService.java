@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.example.capstone_1.Model.Merchant;
 import com.example.capstone_1.Model.MerchantStock;
 import com.example.capstone_1.Model.Product;
-import com.example.capstone_1.Model.User;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 public class MerchantStockService {
     private final MerchantService merchantService; 
     private final ProductService productService; 
-    private final UserService userService; 
 
     private List<MerchantStock> merchantStocks = new ArrayList<>();
     
@@ -109,56 +107,6 @@ public class MerchantStockService {
         }
         
         return "Product ID or Merchant ID not found"; 
-    }
-
-
-    public double applyDiscount(double price, double discountPercentage){
-        return price - (price * (discountPercentage / 100)); 
-    }
-
-    public String buyProduct(String userId, String productId, String merchantId, String discountCode){
-        User user = userService.getUserById(userId); 
-        if(user == null){
-            return "User ID does not exsist"; 
-        }
-
-        Product product = productService.getProductById(productId); 
-        if(product == null){
-            return "Product ID does not exsist"; 
-        }
-
-        Merchant merchant = merchantService.getMerchantById(merchantId); 
-        if(merchant == null){
-            return "Merchant ID does not exsist"; 
-        }
-        
-        MerchantStock stock = getMerchantStockByProductAndMerchant(productId, merchantId);        
-        if(stock == null){
-            return "Product not available in merchant stock"; 
-        }
-
-        double price = product.getPrice();
-        
-        if(discountCode != null && discountCode.equalsIgnoreCase("get15")){
-            price = price - (price * 15.0 / 100);
-        }
-
-        if(price <= 0){
-            price = 0; 
-        }
-
-        if(user.getBalance() < price){
-            return "Insufficient balance"; 
-        }
-
-        if(stock.getStock() <= 0){
-            return "Product out of stock"; 
-        }
-
-        stock.setStock(stock.getStock() - 1);
-        user.setBalance(user.getBalance() - price);
-        
-        return "Purchase successful"; 
     }
 
     public MerchantStock getMerchantStockByProductAndMerchant(String productId, String merchantId){
